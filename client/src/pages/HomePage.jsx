@@ -1,20 +1,25 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-import usePosts from "../hooks/usePosts";
-import getPublishedDate from "../utils/getPublishedDate";
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/authentication'
+import usePosts from '../hooks/usePosts'
+import getPublishedDate from '../utils/getPublishedDate'
 
 function HomePage() {
-  const navigate = useNavigate();
-  const [page, setPage] = useState(1);
-  const [status, setStatus] = useState("");
-  const [keywords, setKeywords] = useState("");
-  const { posts, totalPages, getPosts, deletePost, isError, isLoading } =
-    usePosts();
+  const navigate = useNavigate()
+  const [page, setPage] = useState(1)
+  const [status, setStatus] = useState('')
+  const [keywords, setKeywords] = useState('')
+  const { posts, totalPages, getPosts, deletePost, isError, isLoading } = usePosts()
+  const { logout } = useAuth()
+  
 
   useEffect(() => {
-    getPosts({ status, keywords, page });
-  }, [status, keywords, page]);
+    getPosts({ status, keywords, page })
+  }, [status, keywords, page])
+
+  const handleLogout = () => {
+    logout()
+  } 
 
   return (
     <div>
@@ -22,7 +27,7 @@ function HomePage() {
         <h1 className="app-title">Blog Post App</h1>
         <button
           onClick={() => {
-            navigate("/post/create");
+            navigate('/post/create')
           }}
         >
           Create Post
@@ -31,7 +36,7 @@ function HomePage() {
            // 🐨 Todo: Exercise #7
           //  นำ Function `logout` จาก AuthContext มา Execute ใน Prop `onClick`
         */}
-        <button>Logout</button>
+        <button onClick={handleLogout}>Logout</button>
       </div>
       <div className="search-box-container">
         <div className="search-box">
@@ -42,7 +47,7 @@ function HomePage() {
               placeholder="Search by title"
               value={keywords}
               onChange={(e) => {
-                setKeywords(e.target.value);
+                setKeywords(e.target.value)
               }}
             />
           </label>
@@ -100,7 +105,7 @@ function HomePage() {
                 x
               </button>
             </div>
-          );
+          )
         })}
         {isError ? <h1>Request failed</h1> : null}
         {isLoading ? <h1>Loading ....</h1> : null}
@@ -123,7 +128,7 @@ function HomePage() {
         {page} / {totalPages}
       </div>
     </div>
-  );
+  )
 }
 
-export default HomePage;
+export default HomePage
