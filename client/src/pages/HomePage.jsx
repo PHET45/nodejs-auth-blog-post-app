@@ -17,6 +17,10 @@ function HomePage() {
     getPosts({ status, keywords, page })
   }, [status, keywords, page])
 
+  const handleLogout = () => {
+    logout()
+  } 
+
   return (
     <div>
       <div className="app-wrapper">
@@ -32,7 +36,7 @@ function HomePage() {
            // 🐨 Todo: Exercise #7
           //  นำ Function `logout` จาก AuthContext มา Execute ใน Prop `onClick`
         */}
-        <button onClick={() => {logout()}}>Logout</button>
+        <button onClick={handleLogout}>Logout</button>
       </div>
       <div className="search-box-container">
         <div className="search-box">
